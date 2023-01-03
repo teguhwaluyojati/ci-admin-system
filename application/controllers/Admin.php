@@ -166,9 +166,6 @@ class Admin extends CI_Controller
         $id = $this->input->post('edId');
 
         $this->form_validation->set_rules('name', 'Name', 'required|trim');
-        $this->form_validation->set_rules('email1', 'Email', 'trim|valid_email|is_unique[user.email]', [
-            'is_unique' => 'Email already registered!'
-        ]);
         $this->form_validation->set_rules('role', 'Role', 'required|trim');
         $this->form_validation->set_rules('status', 'Status', 'required|trim');
 
@@ -180,7 +177,6 @@ class Admin extends CI_Controller
                 $this->load->view('templates/footer');
                 }else{
                     $name = $this->input->post('name');
-                    $email = $this->input->post('email');
                     $role = $this->input->post('role');
                     $status = $this->input->post('status');
                     $idNow = $this->input->post('idNow');
@@ -188,7 +184,6 @@ class Admin extends CI_Controller
                     $this->db->set('name', $name);
                     $this->db->set('role_id', $role);
                     $this->db->set('is_active', $status);
-                    $this->db->set('email', $email);
                     $this->db->where('id', $idNow);
                     $this->db->update('user');
 
