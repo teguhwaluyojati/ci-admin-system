@@ -41,6 +41,24 @@ class Admin extends CI_Controller
         $this->load->view('templates/footer');
     }
 
+    public function addRole()
+    {
+        
+
+        $this->form_validation->set_rules('role', 'Role', 'required|trim');
+
+        if($this->form_validation->run()== false){
+            return false;
+        }else{
+            $role = $this->input->post('role');
+            $this->db->insert('user_role', ['role'=> $role]);
+
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">New Role Has Been Added!</div>');
+
+            redirect('admin/role');
+        }
+    }
+
 
     public function roleAccess($role_id)
     {
@@ -150,7 +168,7 @@ class Admin extends CI_Controller
         $id = $this->input->post('edId');
 
         $this->form_validation->set_rules('name', 'Name', 'required|trim');
-        $this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email|is_unique[user.email]', [
+        $this->form_validation->set_rules('email1', 'Email', 'trim|valid_email|is_unique[user.email]', [
             'is_unique' => 'Email already registered!'
         ]);
         $this->form_validation->set_rules('role', 'Role', 'required|trim');

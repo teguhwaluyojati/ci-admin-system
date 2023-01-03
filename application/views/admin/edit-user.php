@@ -23,7 +23,13 @@
             <div class="form-group row">
                 <label for="email" class="col-sm-2 col-form-label">Email</label>
                 <div class="col-sm-5">
-                    <input type="email" class="form-control" id="email" name="email" value="<?= $now['email']?>"><?= form_error('email', '<small class="text-danger pl-3">', '</small>'); ?>
+                    <input type="email" class="form-control" id="email" name="email" value="<?= $now['email']?>" readonly>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="email" class="col-sm-2 col-form-label">New Email?</label>
+                <div class="col-sm-5">
+                <input type="email" class="form-control" id="email1" name="email1"> <?= form_error('email', '<small class="text-danger pl-3">', '</small>'); ?>
                 </div>
             </div>
             <div class="form-group row">
