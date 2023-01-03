@@ -143,8 +143,6 @@ class Admin extends CI_Controller
 
     public function delete($id)
     {
-        $id = $this->input->post('delId');
-
         $this->db->where('id', $id);
         $this->db->delete('user');
 

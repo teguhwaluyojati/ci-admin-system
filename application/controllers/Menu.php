@@ -67,15 +67,90 @@ class Menu extends CI_Controller
         }
     }
 
-    public function delete($menu)
+    public function delete($id)
     {
-        $menu = $this->input->post('menuId');
-        $id = $this->db->get_where('user_menu', ['id' => $menu]);
-        $delete = $this->db->delete('user_menu', ['id' => $id]);
+        
+        $this->db->where('id', $id);
+        $this->db->delete('user_menu');
 
-        if ($delete) {
+        if ($this->db->affected_rows()>0) {
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Success Delete!</div>');
             redirect('menu');
+        }
+    }
+
+    public function edMenu($id)
+    {
+        $data['menu'] = $this->db->get_where('user_menu', ['id' => $id])->row_array();
+        $data['title'] = 'Edit Menu';
+        $data['user'] = $this->db->get_where('user', ['email' =>
+        $this->session->userdata('email')])->row_array();
+
+        $this->form_validation->set_rules('newMenu', 'NewMenu', 'required|trim|is_unique[user_menu.menu]',[
+            'is_unique' => 'Menu already registered!'
+        ]);
+
+        if($this->form_validation->run() == false){
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/topbar', $data);
+            $this->load->view('menu/edit-menu', $data);
+            $this->load->view('templates/footer');
+        }else{
+            $newMenu = $this->input->post('newMenu');
+
+            $this->db->set('menu', $newMenu);
+            $this->db->where('id', $id);
+            $this->db->update('user_menu');
+
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Edit Menu Success!</div>');
+
+            redirect('menu');
+        }
+    }
+
+    public function edSubMenu($id)
+    {
+        $data['submenu'] = $this->db->get_where('user_sub_menu', ['id' => $id])->row_array();
+        $data['title'] = 'Edit Sub Menu';
+        $data['user'] = $this->db->get_where('user', ['email' =>
+        $this->session->userdata('email')])->row_array();
+
+        $this->form_validation->set_rules('newTitle','newTitle','trim|is_unique[user_sub_menu.title]',[
+            'is_unique'=> 'Title already registered!'
+        ]);
+
+        if($this->form_validation->run() == false){
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/topbar', $data);
+            $this->load->view('menu/edit-submenu', $data);
+            $this->load->view('templates/footer');
+        }else{
+            $newTitle = $this->input->post('newTitle');
+            $newIcon = $this->input->post('newIcon');
+            $newStatus = $this->input->post('newStatus');
+
+            $this->db->set('title', $newTitle);
+            $this->db->set('icon', $newIcon);
+            $this->db->set('is_active', $newStatus);
+            $this->db->where('id', $id);
+            $this->db->update('user_sub_menu');
+
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Edit Sub Menu Success!</div>');
+
+            redirect('menu/submenu');
+        }
+    }
+
+    public function delSubMenu($id)
+    {
+        $this->db->where('id', $id);
+        $this->db->delete('user_sub_menu');
+
+        if($this->db->affected_rows()> 0 ){
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Success Delete!</div>');
+            redirect('menu/submenu');
         }
     }
 }

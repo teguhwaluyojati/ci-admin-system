@@ -36,19 +36,8 @@
                             Not Active
                         <?php endif; ?></td>
                     <td>
-                        <form action="<?=base_url('admin/delete/'). $d['id'];?>" method ="post">
-                        <input type="hidden"name="delId" value="<?=$d['id']?>" >
-                        <button type="submit" class="btn btn-danger btn-xs"title="Delete">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                        </form>
-
-                        <form action="<?=base_url('admin/edit/'). $d['id'];?>" method ="post">
-                        <input type="hidden"name="edId" value="<?=$d['id']?>">
-                        <button type="submit" class="btn btn-success btn-xs">
-                            <i class="fas fa-pen"></i>
-                        </button>
-                        </form>
+                        <a href="<?=base_url('admin/edit/'). $d['id'];?>" class="badge badge-success">Edit</a>
+                        <a href="<?=base_url('admin/delete/'). $d['id']?>" class="badge badge-danger" class="badge badge-danger" data-toggle="modal" name="delId"data-target="#deleteUserModal">Delete</a>
                     </td>
                     <?php $i++ ?>
                 <?php endforeach; ?>
@@ -63,3 +52,22 @@
 
 </div>
 <!-- End of Main Content -->
+
+<!-- Delete Menu Modal-->
+<div class="modal fade" id="deleteUserModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Are You Sure Want To Delete?</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">Select "Delete" below if you sure to delete.</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-primary" href="<?= base_url('admin/delete/'. $d['id']) ?>">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>

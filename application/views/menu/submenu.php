@@ -24,7 +24,7 @@
                         <th scope="col">Menu</th>
                         <th scope="col">Url</th>
                         <th scope="col">Icon</th>
-                        <th scope="col">Active</th>
+                        <th scope="col">Status</th>
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
@@ -37,10 +37,15 @@
                             <td><?= $sm['menu']; ?></td>
                             <td><?= $sm['url']; ?></td>
                             <td><?= $sm['icon']; ?></td>
-                            <td><?= $sm['is_active']; ?></td>
+                            <td><?php if ($sm['is_active'] ==1): ?>
+                                    Active
+                                <?php elseif($sm['is_active'] != 1): ?>
+                                    Not Active
+                                <?php endif; ?>
+                            </td>
                             <td>
-                                <a href="" class="badge badge-success">Edit</a>
-                                <a href="" class="badge badge-danger">Delete</a>
+                                <a href="<?=base_url('menu/edsubmenu/'). $sm['id']?>" class="badge badge-success">Edit</a>
+                                <a href="<?=base_url('menu/delsubmenu/'). $sm['id']?>" class="badge badge-danger" class="badge badge-danger" data-toggle="modal" name="menuId"data-target="#deleteModal">Delete</a>
                             </td>
                         </tr>
                         <?php $i++; ?>
@@ -99,6 +104,25 @@
                     <button type="Submit" class="btn btn-primary">Add</button>
                 </div>
             </form>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Menu Modal-->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Are You Sure Want To Delete?</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">Select "Delete" below if you sure to delete.</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-primary" href="<?= base_url('menu/delsubmenu/'. $sm['id']) ?>">Delete</a>
+            </div>
         </div>
     </div>
 </div>

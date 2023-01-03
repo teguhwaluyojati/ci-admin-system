@@ -38,7 +38,7 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="password" class="col-sm-2 col-form-label">Is Active</label>
+                    <label for="is_active" class="col-sm-2 col-form-label">Is Active</label>
                     <div class="col-sm-5 ml-4">
                         <input class="form-check-input" type="checkbox" value="1" name="is_active" id="is_active" checked>
                     </div>

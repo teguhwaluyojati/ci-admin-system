@@ -29,14 +29,13 @@
             <div class="form-group row">
                 <label for="email" class="col-sm-2 col-form-label">New Email?</label>
                 <div class="col-sm-5">
-                <input type="email" class="form-control" id="email1" name="email1"> <?= form_error('email', '<small class="text-danger pl-3">', '</small>'); ?>
+                <input type="email" class="form-control" id="email1" name="email1"> <?= form_error('email1', '<small class="text-danger pl-3">', '</small>'); ?>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="role" class="col-sm-2 col-form-label">Role</label>
                 <div class="col-sm-3">
                 <select class="custom-select" name ="role">
-                        <option selected>Choose User Role</option>
                         <option value="1">Admin</option>
                         <option value="2">User</option>
                     </select>
@@ -46,7 +45,6 @@
                 <label for="status" class="col-sm-2 col-form-label">Status</label>
                 <div class="col-sm-3">
                     <select class="custom-select" name="status">
-                        <option selected>Choose User Status</option>
                         <option value="1">Active</option>
                         <option value="0">Not Active</option>
                     </select>
