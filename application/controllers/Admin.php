@@ -174,29 +174,72 @@ class Admin extends CI_Controller
         $this->form_validation->set_rules('role', 'Role', 'required|trim');
         $this->form_validation->set_rules('status', 'Status', 'required|trim');
 
-        if ($this->form_validation->run() == false) {
-        $this->load->view('templates/header', $data);
+            if ($this->form_validation->run() == false) {
+            $this->load->view('templates/header', $data);
+                $this->load->view('templates/sidebar', $data);
+                $this->load->view('templates/topbar', $data);
+                $this->load->view('admin/edit-user', $data);
+                $this->load->view('templates/footer');
+                }else{
+                    $name = $this->input->post('name');
+                    $email = $this->input->post('email');
+                    $role = $this->input->post('role');
+                    $status = $this->input->post('status');
+                    $idNow = $this->input->post('idNow');
+                    
+                    $this->db->set('name', $name);
+                    $this->db->set('role_id', $role);
+                    $this->db->set('is_active', $status);
+                    $this->db->set('email', $email);
+                    $this->db->where('id', $idNow);
+                    $this->db->update('user');
+
+                    $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Edit User Success!</div>');
+
+                    redirect('admin');
+                }
+    }
+
+    public function delRole($id)
+    {
+        $data['role'] = $this->db->get_where('user_role', ['id' => $role_id])->row_array();
+
+        $this->db->where('id', $id);
+        $this->db->delete('user_role');
+
+        if($this->db->affected_rows()>0){
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Delete User Role Success!</div>');
+            redirect('admin/role');
+        }
+    }
+
+    public function edRole($id)
+    {
+        $data['role'] = $this->db->get_where('user_role', ['id' => $id])->row_array();
+        $data['title'] = 'Edit Role';
+        $data['user'] = $this->db->get_where('user', ['email' =>
+        $this->session->userdata('email')])->row_array();
+
+        $this->form_validation->set_rules('newRole','NewRole','required|trim|is_unique[user_role.role]',[
+            'is_unique' => 'Role already registered!'
+        ]);
+
+        if($this->form_validation->run() == false){
+            $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/topbar', $data);
-            $this->load->view('admin/edit-user', $data);
+            $this->load->view('admin/edit-role', $data);
             $this->load->view('templates/footer');
-    }else{
-        $name = $this->input->post('name');
-        $email = $this->input->post('email');
-        $role = $this->input->post('role');
-        $status = $this->input->post('status');
-        $idNow = $this->input->post('idNow');
-        
-        $this->db->set('name', $name);
-        $this->db->set('role_id', $role);
-        $this->db->set('is_active', $status);
-        $this->db->set('email', $email);
-        $this->db->where('id', $idNow);
-        $this->db->update('user');
+        }else{
+            $newRole = $this->input->post('newRole');
+            
+            $this->db->set('role', $newRole);
+            $this->db->where('id', $id);
+            $this->db->update('user_role');
+            
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Edit Role Success!</div>');
 
-        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Edit User Success!</div>');
-
-        redirect('admin');
+            redirect('admin/role');
+        }
     }
-}
 }
