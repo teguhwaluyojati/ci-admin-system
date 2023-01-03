@@ -58,7 +58,7 @@ class Auth extends CI_Controller
                     redirect('auth');
                 }
             } else {
-                $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">This email has not been activated!<br><a href="http://testing.test/ci-login/auth/reactive">Re-Activation?</a></div>');
+                $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">This email has not been activated!<br><a href="http://localhost/develop/ci-login/auth/reactive">Re-Activation?</a></div>');
                 redirect('auth');
             }
         } else {
@@ -314,7 +314,7 @@ class Auth extends CI_Controller
 
         if ($this->form_validation->run() == false) {
 
-            $data['title'] = 'Forgot Password';
+            $data['title'] = 'Activation';
             $this->load->view('templates/auth_header', $data);
             $this->load->view('auth/reactive');
             $this->load->view('templates/auth_footer');

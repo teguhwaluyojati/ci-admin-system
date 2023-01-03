@@ -23,6 +23,12 @@ How to Running This Program?
 - Open the database.php folder, then adjust it to your database (username, password, database name).
 - Congratulations, the application can be run in your browser.
 
+********
+IMPORTANT
+********
+For activate register and forgot password, you need to configuring smtp user and password.
+You can check my video how to configuring smtp : https://youtu.be/iuy2YUcGiGQ
+
 ****
 Note
 ****
